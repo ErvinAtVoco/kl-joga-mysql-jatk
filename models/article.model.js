@@ -28,7 +28,7 @@ Article.getAll = (result) => {
 
 };
 
-Article.getBySlug = (slug, result) => {
+Article.getBySlug = (result) => {
     let query = `SELECT article.name as title, article.slug, article.image, article.body, article.published, author.name AS name 
                 FROM article 
                 LEFT JOIN author 
@@ -49,7 +49,7 @@ Article.getBySlug = (slug, result) => {
 
 }
 
-Article.getByAuthor = (author, result) => {
+Article.getByAuthor = (result) => {
     let query = `SELECT article.name as title, article.image, article.slug, author.name as name 
                 FROM article 
                 INNER JOIN author 

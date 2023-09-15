@@ -45,7 +45,7 @@ const getArticlesByAuthor = (req, res) => {
         } else {
             console.log(data)
             res.render('author', {
-                authors: data,
+                article: data,
                 authorName: data[0].name
             })
         }
