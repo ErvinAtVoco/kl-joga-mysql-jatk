@@ -73,9 +73,13 @@ const createNewArticle = (req, res) => {
             })
         } else {
             console.log(data)
-            res.send(data)
+            res.redirect('/')
         }
     })
+}
+
+const showNewArticleForm = (req, res) => {
+    res.render('create_article')
 }
 
 
@@ -83,5 +87,6 @@ module.exports = {
     getAllArticles,
     getArticlesBySlug,
     getArticlesByAuthor,
-    createNewArticle
+    createNewArticle,
+    showNewArticleForm
 }

@@ -8,6 +8,7 @@ const articleController = require('../controllers/article');
 router.get('/', articleController.getAllArticles);
 router.get('/article/:slug', articleController.getArticlesBySlug);
 router.get('/:author', articleController.getArticlesByAuthor);
+router.get('/article/create', articleController.showNewArticleForm);
 router.post('/create', articleController.createNewArticle);
 
 //export article router
