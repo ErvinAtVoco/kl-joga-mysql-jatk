@@ -45,15 +45,43 @@ const getArticlesByAuthor = (req, res) => {
         } else {
             console.log(data)
             res.render('author', {
-                article: data,
+                authors: data,
                 authorName: data[0].name
             })
         }
     })
 }
 
+//Create a new article
+const createNewArticle = (req, res) => {
+    //New article from post data
+    console.log("new article")
+
+    const newArticle = new Article({
+        name: req.body.name,
+        slug: req.body.slug,
+        image: req.body.image,
+        body: req.body.body,
+        published: new Date().toISOString().slice(0, 19).replace('T', ' '),
+        author_id: req.body.author_id
+    })
+
+    Article.createNew(newArticle, (err, data) => {
+        if(err){
+            res.status(500).send({
+                message: err.message || 'Some error occurred sending articles data'
+            })
+        } else {
+            console.log(data)
+            res.send(data)
+        }
+    })
+}
+
+
 module.exports = {
     getAllArticles,
     getArticlesBySlug,
-    getArticlesByAuthor
+    getArticlesByAuthor,
+    createNewArticle
 }
