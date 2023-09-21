@@ -1,0 +1,23 @@
+<h1>Edit article</h1>
+
+{{#article}}
+
+<form method="post" action="/edit">
+    <label for="name">Name</label>
+    <input type="text" name="name" id="name" value="{{name}}">
+    <label for="slug">Slug</label>
+    <input type="text" name="slug" id="slug" value="{{slug}}">
+    <label for="Image">Image</label>
+    <input type="text" name="image" id="image" value="{{image}}">
+    <label for="author_id">Author</label>
+    <select name="author_id" id="author_id">{{{authors}}}</select>
+    <label for="body">Body</label>
+    <textarea name="body" id="body">{{{body}}}</textarea>
+    <button>Update</button>
+</form>
+<h2>Delete article</h2>
+<form method="post" action="/delete">
+    <input type="hidden" name="action" value="delete">
+    <button class="danger">Delete</button>
+</form>
+{{/article}}

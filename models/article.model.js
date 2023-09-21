@@ -69,6 +69,20 @@ Article.getByAuthor = (author, result) => {
 
 }
 
+Article.getAuthorsForCreate = (result) => {
+    let query = `SELECT * FROM author`
+    let authors = []
+    con.query(query, (err, res) => {
+        if (err) {
+            console.log("error: ", err);
+            result(err, null);
+            return;
+        }
+        authors = res
+        result(null, authors);
+    })
+}
+
 Article.createNew = (newArticle, result) => {
     let query = `INSERT INTO article SET
                 name = "${newArticle.name}",
@@ -85,6 +99,58 @@ Article.createNew = (newArticle, result) => {
         }
         console.log("Created new article: ", {id: res.insertId, ...newArticle});
         result(null, {id: res.insertId, ...newArticle})
+    })
+}
+
+Article.getForEditing = (id, result) => {
+    let query = `SELECT article.name as title, article.slug, article.image, article.body, article.published, author.name AS name, author.id as author_id
+                 FROM article 
+                 WHERE article.id = ${id} 
+                 INNER JOIN author ON article.author_id=author.id`
+    con.query(query, (err, res) => {
+        if (err) {
+            console.log("error: ", err);
+            result(err, null);
+            return;
+        }
+
+        if (res.length) {
+            console.log("found article", res[0]);
+            result(null, res[0]);
+        }
+    })
+}
+
+Article.editArticle = (editedArticle, result) => {
+    let query = `UPDATE article SET 
+                 name = "${editedArticle.name}",
+                 slug = "${editedArticle.slug}",
+                 image = "${editedArticle.image}",
+                 body = "${editedArticle.body}",
+                 author_id = "${editedArticle.author_id}"
+                 WHERE id = "${editedArticle.id}"`
+    con.query(query, (err, res) => {
+        if(err) {
+            console.log("error: ", err);
+            result(err, null);
+            return;
+        }
+        console.log("Edited article: ", {id: res.insertId, ...editedArticle});
+        result(null, {id: res.insertId, ...editedArticle})
+    })
+
+}
+
+Article.deleteArticle = (id, result) => {
+    let query = `DELETE FROM article WHERE id=${id}`
+    con.query(query, (err, res) => {
+        if(err) {
+            console.log("error: ", err);
+            result(err, null);
+            return;
+        }
+        console.log("Deleted article successfully");
+        result(null, res);
     })
 }
 

@@ -7,4 +7,4 @@ const usersController = require ('../controllers/users');
 //user controller functions according to the route
 router.get('/', usersController.showRegistrationForm);
 
-mdoule.exports = router;
+module.exports = router;
